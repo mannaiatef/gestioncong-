@@ -1,0 +1,38 @@
+<div class="fournisseur-card">
+  <div class="card-header">
+    <h2><i class="pi pi-users" style="margin-right:8px;color:#007ad9;"></i>Liste des Fournisseurs</h2>
+    <input type="text" pInputText placeholder="Rechercher..." [(ngModel)]="searchTerm" (input)="filterList()" class="search-bar" />
+    <button pButton type="button" label="Ajouter" icon="pi pi-plus" class="add-btn" (click)="addFournisseur()"></button>
+    <button pButton type="button" label="Exporter PDF" icon="pi pi-file-pdf" class="export-btn" (click)="exportPdf()">
+      <span *ngIf="fournisseurs.length > 0" class="pdf-badge">{{ fournisseurs.length }}</span>
+    </button>
+  </div>
+
+  <p-table [value]="fournisseurs" [paginator]="true" [rows]="10" [responsiveLayout]="'scroll'" class="styled-table modern-table">
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="position:sticky;top:0;z-index:2;background:#f0f4f8;">Nom <i class="pi pi-user"></i></th>
+        <th style="position:sticky;top:0;z-index:2;background:#f0f4f8;">Contact <i class="pi pi-id-card"></i></th>
+        <th style="position:sticky;top:0;z-index:2;background:#f0f4f8;">Téléphone <i class="pi pi-phone"></i></th>
+        <th style="position:sticky;top:0;z-index:2;background:#f0f4f8;">Actions <i class="pi pi-cog"></i></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-fournisseur>
+      <tr>
+        <td>{{ fournisseur.name }}</td>
+        <td>{{ fournisseur.contact }}</td>
+        <td>{{ fournisseur.numtel }}</td>
+        <td class="actions-col">
+          <button class="icon-btn edit" (click)="editFournisseur(fournisseur.id)" pTooltip="Modifier">
+            <i class="pi pi-pencil"></i>
+          </button>
+          <button class="icon-btn delete" (click)="deleteFournisseur(fournisseur.id)" pTooltip="Supprimer">
+            <i class="pi pi-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <p-toast></p-toast>
+</div>

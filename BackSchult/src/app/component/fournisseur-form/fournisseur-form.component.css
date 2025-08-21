@@ -1,0 +1,67 @@
+.fournisseur-form-card {
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 2rem;
+  max-width: 1000px;
+  margin: 2rem auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.card-header h3 {
+  font-size: 1.6rem;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+/* Labels and fields */
+.field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #555;
+}
+
+input.p-inputtext {
+  border-radius: 10px;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  transition: border-color 0.3s ease;
+}
+
+input.p-inputtext:focus {
+  border-color: #007ad9;
+  box-shadow: 0 0 0 0.2rem rgba(0, 122, 217, 0.2);
+}
+
+/* Errors */
+.p-error {
+  font-size: 0.85rem;
+  color: #f44336;
+}
+
+/* Buttons row */
+.btn-row {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* Button effects */
+.save-btn {
+  padding: 0.6rem 1.5rem;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.cancel-btn {
+  padding: 0.6rem 1.5rem;
+  border-radius: 10px;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}

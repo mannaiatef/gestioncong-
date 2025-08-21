@@ -1,0 +1,43 @@
+<div class="form-container">
+  <div class="form-card">
+    <div class="form-header">
+      <h2><i class="pi pi-box"></i> {{ isEdit ? 'Modifier' : 'Ajouter' }} un Stock</h2>
+      <p class="form-subtitle">Gérez les stocks de vos matériaux</p>
+    </div>
+
+    <div class="form-body">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label"><i class="pi pi-cog"></i> Matériel *</label>
+            <p-dropdown 
+              [options]="materials" 
+              formControlName="materiel" 
+              optionLabel="name" 
+              optionValue="id"
+              [showClear]="true"
+              placeholder="Sélectionnez un matériel"
+              class="form-dropdown">
+            </p-dropdown>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label"><i class="pi pi-layer"></i> Quantité actuelle *</label>
+            <p-inputNumber formControlName="currentQuantity" [min]="0" mode="decimal" placeholder="0" class="form-input"></p-inputNumber>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label"><i class="pi pi-exclamation-triangle"></i> Seuil d'alerte *</label>
+            <p-inputNumber formControlName="threshold" [min]="0" mode="decimal" placeholder="0" class="form-input"></p-inputNumber>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button pButton type="submit" label="{{ isEdit ? 'Mettre à jour' : 'Créer' }}" class="btn btn-primary" [disabled]="form.invalid || loading"></button>
+          <button pButton type="button" label="Annuler" class="btn btn-secondary" (click)="router.navigate(['/dashboard/stock'])"></button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <p-toast></p-toast>
+</div>

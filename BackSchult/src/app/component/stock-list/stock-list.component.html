@@ -1,0 +1,35 @@
+<div class="fournisseur-card">
+  <div class="card-header">
+    <h2><i class="pi pi-box" style="margin-right:8px;color:#007ad9;"></i>Liste des Stocks</h2>
+    <button pButton type="button" label="Ajouter" icon="pi pi-plus" class="add-btn" (click)="router.navigate(['/dashboard/stock/ajouter'])"></button>
+  </div>
+
+  <p-table [value]="stocks" [loading]="loading" [paginator]="true" [rows]="10" [responsiveLayout]="'scroll'" class="styled-table modern-table">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Matériel <i class="pi pi-tools"></i></th>
+        <th>Quantité <i class="pi pi-sort-numeric-up"></i></th>
+        <th>Seuil <i class="pi pi-exclamation-triangle"></i></th>
+        <th>Actions <i class="pi pi-cog"></i></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-stock>
+      <tr>
+        <td>{{stock.materiel?.name}}</td>
+        <td>{{stock.currentQuantity}}</td>
+        <td>{{stock.threshold}}</td>
+        <td class="actions-col">
+          <button class="icon-btn edit" (click)="editStock(stock.id)" pTooltip="Modifier">
+            <i class="pi pi-pencil"></i>
+          </button>
+          <button class="icon-btn delete" (click)="deleteStock(stock.id)" pTooltip="Supprimer">
+            <i class="pi pi-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-confirmDialog></p-confirmDialog>
+<p-toast></p-toast>

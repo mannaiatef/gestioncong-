@@ -166,3 +166,9 @@ Thumbs.db
 application.properties
 application-dev.properties
 application-prod.properties 
+
+# Angular workspace cache
+BackSchult/.angular/
+
+# Ensure frontend dependencies are ignored
+BackSchult/node_modules/ 

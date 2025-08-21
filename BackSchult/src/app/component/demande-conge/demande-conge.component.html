@@ -1,0 +1,49 @@
+<div class="conge-card">
+  <div class="card-header">
+    <h2><i class="pi pi-calendar" style="margin-right:8px;color:#007ad9;"></i>Liste des demandes de congé</h2>
+  </div>
+
+  <p-table [value]="demandes" [paginator]="true" [rows]="8" [responsiveLayout]="'scroll'" class="styled-table modern-table">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Date Début <i class="pi pi-clock"></i></th>
+        <th>Date Fin <i class="pi pi-clock"></i></th>
+        <th>Motif <i class="pi pi-align-left"></i></th>
+        <th>Status <i class="pi pi-info-circle"></i></th>
+        <th>Employé <i class="pi pi-user"></i></th>
+        <th>Chef <i class="pi pi-users"></i></th>
+        <th>Actions <i class="pi pi-cog"></i></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-d>
+      <tr>
+        <td>{{ d.dateDebut | date:'dd/MM/yyyy' }}</td>
+        <td>{{ d.dateFin   | date:'dd/MM/yyyy' }}</td>
+        <td>{{ d.motif }}</td>
+        <td>
+          <span class="status-badge"
+                [ngClass]="{
+                  'status-en-attente': d.status === 'EN_ATTENTE',
+                  'status-validee': d.status === 'VALIDEE',
+                  'status-refusee': d.status === 'REFUSEE'
+                }">
+            {{ d.status }}
+          </span>
+        </td>
+        <td>{{ d.employeUsername }}</td>
+        <td>{{ d.chefUsername }}</td>
+        <td class="actions-col">
+          <button class="icon-btn success" *ngIf="d.status === 'EN_ATTENTE'" (click)="valider(d.id)" pTooltip="Valider">
+            <i class="pi pi-check"></i>
+          </button>
+          <button class="icon-btn warn" *ngIf="d.status === 'EN_ATTENTE'" (click)="refuser(d.id)" pTooltip="Refuser">
+            <i class="pi pi-times"></i>
+          </button>
+          <button class="icon-btn delete" (click)="supprimer(d.id)" pTooltip="Supprimer">
+            <i class="pi pi-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

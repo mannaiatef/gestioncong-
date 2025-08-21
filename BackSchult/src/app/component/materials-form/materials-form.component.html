@@ -1,0 +1,61 @@
+<div class="form-container">
+  <div class="form-card">
+    <div class="form-header">
+      <h2><i class="pi pi-cog"></i> {{ isEdit ? 'Modifier' : 'Ajouter' }} un Matériau</h2>
+      <p class="form-subtitle">Renseignez les détails du matériau</p>
+    </div>
+
+    <div class="form-body">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="p-fluid grid">
+        <div class="field col-12 md:col-6">
+          <label for="name">Nom</label>
+          <input id="name" type="text" pInputText formControlName="name" 
+                 [class]="{'ng-invalid ng-dirty': form.get('name')?.invalid && form.get('name')?.touched}">
+          <small *ngIf="form.get('name')?.invalid && form.get('name')?.touched" class="p-error">
+            Le nom est requis (max 100 caractères)
+          </small>
+        </div>
+
+        <div class="field col-12 md:col-6">
+          <label for="quantity">Quantité</label>
+          <p-inputNumber id="quantity" formControlName="quantity" [min]="0" mode="decimal"
+                         [class]="{'ng-invalid ng-dirty': form.get('quantity')?.invalid && form.get('quantity')?.touched}">
+          </p-inputNumber>
+          <small *ngIf="form.get('quantity')?.invalid && form.get('quantity')?.touched" class="p-error">
+            La quantité doit être positive ou nulle
+          </small>
+        </div>
+
+        <div class="field col-12 md:col-6">
+          <label for="unitPrice">Prix Unitaire</label>
+          <p-inputNumber id="unitPrice" formControlName="unitPrice" [min]="0.01" mode="currency" currency="EUR"
+                         [class]="{'ng-invalid ng-dirty': form.get('unitPrice')?.invalid && form.get('unitPrice')?.touched}">
+          </p-inputNumber>
+          <small *ngIf="form.get('unitPrice')?.invalid && form.get('unitPrice')?.touched" class="p-error">
+            Le prix unitaire doit être positif
+          </small>
+        </div>
+
+        <div class="field col-12 md:col-6">
+          <label for="categorie">Catégorie</label>
+          <p-dropdown id="categorie" [options]="categories" formControlName="categorie"
+                      [class]="{'ng-invalid ng-dirty': form.get('categorie')?.invalid && form.get('categorie')?.touched}">
+          </p-dropdown>
+          <small *ngIf="form.get('categorie')?.invalid && form.get('categorie')?.touched" class="p-error">
+            La catégorie est requise
+          </small>
+        </div>
+
+        <div class="field col-12 btn-row">
+          <button pButton type="submit" label="Enregistrer" class="btn btn-primary"
+                  [disabled]="form.invalid || loading"></button>
+          <button pButton type="button" label="Annuler" class="btn btn-secondary ml-2"
+                  (click)="router.navigate(['/dashboard/materials'])"></button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<p-toast></p-toast>

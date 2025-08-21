@@ -1,0 +1,88 @@
+.conge-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 1.2rem 1.4rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  margin: 2rem auto;
+  max-width: 1100px;
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.card-header h2 {
+  margin: 0;
+  color: #007ad9;
+}
+
+.modern-table ::ng-deep .p-datatable {
+  border-radius: 18px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+  overflow: hidden;
+  background: #fff;
+}
+.modern-table ::ng-deep .p-datatable-thead > tr > th,
+.modern-table ::ng-deep .p-datatable-tbody > tr > td {
+  padding: 1rem 1.2rem;
+  font-size: 1.02rem;
+}
+.modern-table ::ng-deep .p-datatable-thead > tr > th {
+  background: #f0f4f8;
+  color: #007ad9;
+  font-weight: bold;
+  border: none;
+}
+.modern-table ::ng-deep .p-datatable-tbody > tr:hover {
+  background-color: #eaf4ff;
+}
+
+.status-badge {
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+.status-en-attente { background: #fff3cd; color: #856404; }
+.status-validee   { background: #d4edda; color: #155724; }
+.status-refusee   { background: #f8d7da; color: #721c24; }
+
+.actions-col {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+}
+.icon-btn {
+  background: #f0f4f8;
+  border: none;
+  outline: none;
+  border-radius: 50%;
+  width: 2.3rem;
+  height: 2.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+.icon-btn.success { background: #28a745; }
+.icon-btn.warn    { background: #dc3545; }
+.icon-btn.delete  { background: #6c757d; }
+.icon-btn:hover {
+  transform: scale(1.12);
+  background: #007ad9;
+  box-shadow: 0 4px 12px rgba(0,122,217,0.15);
+}
+
+@media (max-width: 900px) {
+  .conge-card { padding: 0.8rem; }
+  .modern-table ::ng-deep .p-datatable-thead > tr > th,
+  .modern-table ::ng-deep .p-datatable-tbody > tr > td {
+    padding: 0.7rem 0.5rem;
+    font-size: 0.95rem;
+  }
+}

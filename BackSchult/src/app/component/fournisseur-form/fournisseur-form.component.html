@@ -1,0 +1,47 @@
+<div class="fournisseur-form-card">
+  <div class="card-header">
+    <h3>{{ isEdit ? 'Modifier' : 'Ajouter' }} un Fournisseur</h3>
+  </div>
+
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="p-fluid grid">
+        <div class="field col-12 md:col-6">
+          <label for="name">Nom</label>
+          <input id="name" type="text" pInputText formControlName="name"
+                 [ngClass]="{'ng-invalid ng-dirty': form.get('name')?.invalid && form.get('name')?.touched}">
+          <small *ngIf="form.get('name')?.invalid && form.get('name')?.touched" class="p-error">
+            Le nom est requis (max 100 caractères)
+          </small>
+        </div>
+
+        <div class="field col-12 md:col-6">
+          <label for="contact">Contact</label>
+          <input id="contact" type="text" pInputText formControlName="contact"
+                 [ngClass]="{'ng-invalid ng-dirty': form.get('contact')?.invalid && form.get('contact')?.touched}">
+          <small *ngIf="form.get('contact')?.invalid && form.get('contact')?.touched" class="p-error">
+            Le contact est requis (max 100 caractères)
+          </small>
+        </div>
+
+        <div class="field col-12 md:col-6">
+          <label for="numtel">Téléphone</label>
+          <input id="numtel" type="text" pInputText formControlName="numtel"
+                 [ngClass]="{'ng-invalid ng-dirty': form.get('numtel')?.invalid && form.get('numtel')?.touched}">
+          <small *ngIf="form.get('numtel')?.invalid && form.get('numtel')?.touched" class="p-error">
+            Le numéro de téléphone est requis (max 13 caractères)
+          </small>
+        </div>
+
+        <div class="field col-12 btn-row">
+          <button pButton type="submit" label="Enregistrer" class="p-button-success save-btn"
+                  [disabled]="form.invalid || loading"></button>
+          <button pButton type="button" label="Annuler" class="p-button-secondary cancel-btn"
+                  (click)="router.navigate(['/dashboard/fournisseurs'])"></button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<p-toast></p-toast>

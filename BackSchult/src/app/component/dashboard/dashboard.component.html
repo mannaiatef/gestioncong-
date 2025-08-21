@@ -1,0 +1,166 @@
+<div class="dashboard-container">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="logo">
+      <img src="assets/images/logo.jpg" alt="Company Logo">
+    </div>
+    
+    <nav class="nav-menu">
+      <a *ngIf="isAdminOrRH()" routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <i class="fas fa-home"></i> Accueil
+      </a>
+      <a *ngIf="isAdminOrRH()" routerLink="/dashboard/fournisseurs" routerLinkActive="active">
+        <i class="fas fa-truck"></i> Fournisseurs
+      </a>
+
+
+
+ <a *ngIf="isAdminOrRH()" routerLink="/dashboard/demandes-conge" routerLinkActive="active">
+        <i class="fas fa-truck"></i> demande conge
+      </a>
+
+
+      <a *ngIf="isAdminOrRH()" routerLink="/dashboard/chefs" routerLinkActive="active">
+        <i class="fas fa-truck"></i> demande par chef
+      </a>
+
+
+
+
+      <a *ngIf="isAdminOrRH()" routerLink="/dashboard/users" routerLinkActive="active">
+        <i class="fas fa-truck"></i> gestion employer
+      </a>
+
+
+
+
+      <a *ngIf="isAdminOrRH()" routerLink="/dashboard/materials" routerLinkActive="active">
+        <i class="fas fa-boxes"></i> Matériaux
+      </a>
+      <a *ngIf="isAdminOrRH()" routerLink="/dashboard/stock" routerLinkActive="active">
+        <i class="fas fa-warehouse"></i> Stocks
+      </a>
+      <a *ngIf="isAdminOrRH()" routerLink="/dashboard/commandes" routerLinkActive="active">
+        <i class="fas fa-file-invoice"></i> Commandes
+      </a>
+      <a *ngIf="isAdminOrRH()" routerLink="/dashboard/factures" routerLinkActive="active">
+        <i class="fas fa-receipt"></i> Factures
+      </a>
+      <a *ngIf="isAdminOrRH()" routerLink="/dashboard/profile" routerLinkActive="active">
+        <i class="fas fa-user"></i> Profil
+      </a>
+      <a *ngIf="isChef()" routerLink="/dashboard/chefs" routerLinkActive="active">
+        <i class="fas fa-users"></i> Mes employés & demandes de congé
+      </a>
+    </nav>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Top Bar -->
+    <header class="top-bar">
+      <div class="search-box">
+        <input type="text" placeholder="Rechercher...">
+        <i class="fas fa-search"></i>
+      </div>
+      
+      <div class="user-actions">
+        <app-notification-dropdown></app-notification-dropdown>
+        <div class="user-profile" (click)="toggleDropdown()">
+          <img src="assets/images/user-avatar.png" alt="User Avatar">
+          <span>{{ userName }}</span>
+          <i class="fas fa-caret-down"></i>
+          
+          <div class="dropdown-menu" *ngIf="showDropdown">
+            <a routerLink="/dashboard/profile">
+              <i class="fas fa-user"></i> Mon Profil
+            </a>
+            <a (click)="logout()">
+              <i class="fas fa-sign-out-alt"></i> Déconnexion
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Dashboard Content -->
+    <div class="content-area">
+      <router-outlet></router-outlet>
+      
+      <!-- Page d'accueil par défaut -->
+      <div *ngIf="isDashboardHome && isAdminOrRH()">
+        <h1>Bienvenue sur votre Tableau de Bord</h1>
+        
+        <div class="quick-actions">
+          <button routerLink="/dashboard/fournisseurs" class="action-card">
+            <i class="fas fa-truck"></i>
+            <span>Fournisseurs</span>
+          </button>
+          
+          <button routerLink="/dashboard/materials" class="action-card">
+            <i class="fas fa-boxes"></i>
+            <span>Matériaux</span>
+          </button>
+          
+          <button routerLink="/dashboard/stock" class="action-card">
+            <i class="fas fa-warehouse"></i>
+            <span>Stocks</span>
+          </button>
+          
+          <button routerLink="/dashboard/commandes" class="action-card">
+            <i class="fas fa-file-invoice"></i>
+            <span>Commandes</span>
+          </button>
+
+
+
+
+
+          
+          <button routerLink="/dashboard/factures" class="action-card">
+            <i class="fas fa-receipt"></i>
+            <span>Factures</span>
+          </button>
+        </div>
+        
+        <!-- Widgets -->
+        <div class="dashboard-widgets">
+          <!-- Alertes Stock -->
+          <div class="widget" *ngIf="lowStockItems.length > 0">
+            <div class="widget-header">
+              <h3><i class="fas fa-exclamation-triangle"></i> Alertes Stock</h3>
+            </div>
+            <div class="widget-body">
+              <ul>
+                <li *ngFor="let item of lowStockItems">
+                  {{item.materiel?.name}} - Quantité: {{item.currentQuantity}} (Seuil: {{item.threshold}})
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- Commandes en attente -->
+          <div class="widget" *ngIf="pendingCommands.length > 0">
+            <div class="widget-header">
+              <h3><i class="fas fa-clock"></i> Commandes en attente</h3>
+            </div>
+            <div class="widget-body">
+              <ul>
+                <li *ngFor="let cmd of pendingCommands">
+                  #{{cmd.id}} - {{cmd.fournisseur?.name}} - {{cmd.totalAmount | currency:'EUR'}}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- Intégration de la liste des chefs -->
+        <app-chef-list></app-chef-list>
+      </div>
+      <div *ngIf="isDashboardHome && isChef()">
+        <app-chef-list></app-chef-list>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>

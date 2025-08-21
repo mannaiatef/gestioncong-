@@ -1,0 +1,137 @@
+.dashboard-stats-container {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 1100px;
+}
+.dashboard-stats-container h2 {
+  color: #007ad9;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  font-weight: bold;
+}
+.stats-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+.stat-card {
+  background: #f0f4f8;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  padding: 2rem 1.5rem;
+  min-width: 160px;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: box-shadow 0.2s, transform 0.2s;
+  font-size: 1.1rem;
+}
+.stat-card i {
+  font-size: 2.2rem;
+  margin-bottom: 0.7rem;
+  color: #007ad9;
+}
+.stat-value {
+  font-size: 2.1rem;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 0.3rem;
+}
+.stat-label {
+  color: #555;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+.stat-card.commandes i { color: #007ad9; }
+.stat-card.factures i { color: #dc3545; }
+.stat-card.utilisateurs i { color: #17a2b8; }
+.stat-card.stocks i { color: #ffc107; }
+.stat-card.materiaux i { color: #28a745; }
+.stat-card.fournisseurs i { color: #6f42c1; }
+.stat-card:hover {
+  box-shadow: 0 6px 18px rgba(0,122,217,0.13);
+  transform: translateY(-4px) scale(1.04);
+}
+.loading {
+  text-align: center;
+  color: #007ad9;
+  font-size: 1.2rem;
+  margin: 2rem 0;
+}
+.error {
+  color: #dc3545;
+  text-align: center;
+  font-size: 1.1rem;
+  margin: 2rem 0;
+}
+@media (max-width: 900px) {
+  .stats-cards {
+    gap: 1rem;
+  }
+  .stat-card {
+    min-width: 120px;
+    padding: 1.2rem 0.7rem;
+  }
+}
+@media (max-width: 600px) {
+  .dashboard-stats-container {
+    padding: 0.7rem;
+  }
+  .stats-cards {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  .stat-card {
+    width: 100%;
+    min-width: 0;
+    padding: 1rem 0.5rem;
+  }
+}
+.dashboard-charts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  margin-top: 2.5rem;
+}
+.chart-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+  padding: 1.5rem 1.2rem;
+  min-width: 320px;
+  max-width: 420px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+@media (max-width: 900px) {
+  .dashboard-charts {
+    gap: 1rem;
+  }
+  .chart-card {
+    min-width: 220px;
+    max-width: 100%;
+    padding: 1rem 0.5rem;
+  }
+}
+@media (max-width: 600px) {
+  .dashboard-charts {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  .chart-card {
+    width: 100%;
+    min-width: 0;
+    padding: 0.7rem 0.2rem;
+  }
+}

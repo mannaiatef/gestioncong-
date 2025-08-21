@@ -1,0 +1,51 @@
+<div class="dashboard-stats-container">
+  <h2>Statistiques du Système</h2>
+  <div *ngIf="loading" class="loading">Chargement...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+  <div class="stats-cards" *ngIf="!loading && !error">
+    <div class="stat-card commandes">
+      <i class="pi pi-list"></i>
+      <div class="stat-value">{{ stats.commandes || 0 }}</div>
+      <div class="stat-label">Commandes</div>
+    </div>
+    <div class="stat-card factures">
+      <i class="pi pi-file"></i>
+      <div class="stat-value">{{ stats.factures || 0 }}</div>
+      <div class="stat-label">Factures</div>
+    </div>
+    <div class="stat-card utilisateurs">
+      <i class="pi pi-users"></i>
+      <div class="stat-value">{{ stats.utilisateurs || 0 }}</div>
+      <div class="stat-label">Utilisateurs</div>
+    </div>
+    <div class="stat-card stocks">
+      <i class="pi pi-box"></i>
+      <div class="stat-value">{{ stats.stocks || 0 }}</div>
+      <div class="stat-label">Stocks</div>
+    </div>
+    <div class="stat-card materiaux">
+      <i class="pi pi-database"></i>
+      <div class="stat-value">{{ stats.materiaux || 0 }}</div>
+      <div class="stat-label">Matériaux</div>
+    </div>
+    <div class="stat-card fournisseurs">
+      <i class="pi pi-truck"></i>
+      <div class="stat-value">{{ stats.fournisseurs || 0 }}</div>
+      <div class="stat-label">Fournisseurs</div>
+    </div>
+  </div>
+  <div class="dashboard-charts" *ngIf="!loading && !error">
+    <div class="chart-card">
+      <canvas #barChartCanvas width="400" height="300"></canvas>
+    </div>
+    <div class="chart-card">
+      <canvas #pieChartCanvas width="400" height="300"></canvas>
+    </div>
+    <div class="chart-card">
+      <canvas #lineChartCanvas width="400" height="300"></canvas>
+    </div>
+    <div class="chart-card">
+      <canvas #radarChartCanvas width="400" height="300"></canvas>
+    </div>
+  </div>
+</div>

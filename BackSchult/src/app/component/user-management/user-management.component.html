@@ -1,0 +1,133 @@
+<div class="user-mgmt-container">
+  <h2><i class="pi pi-users" style="margin-right:8px;color:#007ad9"></i> Gestion des utilisateurs</h2>
+
+  <div class="user-mgmt-form-card">
+    <h3><i class="pi pi-user-plus" style="margin-right:6px"></i>Créer un utilisateur</h3>
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nom d'utilisateur</label>
+          <input formControlName="username" required placeholder="jdupont">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input formControlName="email" required type="email" placeholder="mail@exemple.com">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Mot de passe</label>
+          <input formControlName="password" required type="password" placeholder="••••••">
+        </div>
+        <div class="form-group">
+          <label>Rôle</label>
+          <select formControlName="role">
+            <option value="EMPLOYE">Employé</option>
+            <option value="CHEF">Chef</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row" *ngIf="userForm.value.role === 'EMPLOYE'">
+        <div class="form-group">
+          <label>Chef assigné</label>
+          <select formControlName="chefId">
+            <option [ngValue]="null">Aucun chef</option>
+            <option *ngFor="let chef of chefs" [ngValue]="chef.id">{{ chef.username }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary"><i class="pi pi-check"></i> Créer</button>
+        <span class="user-mgmt-message" *ngIf="message"><i class="pi pi-info-circle"></i> {{ message }}</span>
+      </div>
+    </form>
+  </div>
+
+  <div class="user-mgmt-lists">
+    <div class="user-mgmt-list-card">
+      <h3><i class="pi pi-briefcase" style="margin-right:6px"></i> Chefs</h3>
+      <div class="form-row" style="margin-bottom:10px">
+        <div class="form-group">
+          <input [(ngModel)]="chefSearch" (input)="applyChefFilter()" placeholder="Rechercher un chef...">
+        </div>
+      </div>
+      <div class="user-grid">
+        <div class="user-tile chef" *ngFor="let chef of filteredChefs">
+          <div class="avatar-circle chef">{{ (chef.username || '?').charAt(0) | uppercase }}</div>
+          <div class="tile-main">
+            <div class="tile-title">{{ chef.username }}</div>
+            <div class="tile-sub">{{ chef.email }}</div>
+            <div class="tile-actions">
+              <button class="icon-btn info" (click)="startEdit(chef)" pTooltip="Modifier"><i class="pi pi-pencil"></i></button>
+              <button class="icon-btn delete" (click)="deleteUser(chef)" pTooltip="Supprimer"><i class="pi pi-trash"></i></button>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="!filteredChefs?.length" class="empty-hint">Aucun chef trouvé</div>
+      </div>
+    </div>
+
+    <div class="user-mgmt-list-card">
+      <h3><i class="pi pi-users" style="margin-right:6px"></i> Employés</h3>
+      <div class="form-row" style="margin-bottom:10px">
+        <div class="form-group">
+          <input [(ngModel)]="empSearch" (input)="applyEmpFilter()" placeholder="Rechercher un employé...">
+        </div>
+      </div>
+      <div class="user-grid">
+        <div class="user-tile" *ngFor="let emp of filteredEmployes">
+          <div class="avatar-circle">{{ (emp.username || '?').charAt(0) | uppercase }}</div>
+          <div class="tile-main">
+            <div class="tile-title">{{ emp.username }}</div>
+            <div class="tile-sub">{{ emp.email }}</div>
+            <div class="tile-sub" style="margin-top:4px;color:#0a63b8">{{ getChefNameForEmploye(emp) }}</div>
+            <div class="tile-actions">
+              <button class="icon-btn success" (click)="promoteToChef(emp)" pTooltip="Promouvoir chef">
+                <i class="pi pi-arrow-up"></i>
+              </button>
+              <select [(ngModel)]="selectedChefId" class="user-mgmt-select">
+                <option [ngValue]="null">Aucun chef</option>
+                <option *ngFor="let chef of chefs" [ngValue]="chef.id">{{ chef.username }}</option>
+              </select>
+              <button class="icon-btn info" (click)="selectedEmployeId = emp.id ?? null; assignEmployeToChef()" pTooltip="Assigner au chef">
+                <i class="pi pi-user-plus"></i>
+              </button>
+              <button class="icon-btn info" (click)="startEdit(emp)" pTooltip="Modifier"><i class="pi pi-pencil"></i></button>
+              <button class="icon-btn delete" (click)="deleteUser(emp)" pTooltip="Supprimer"><i class="pi pi-trash"></i></button>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="!filteredEmployes?.length" class="empty-hint">Aucun employé trouvé</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="user-mgmt-form-card" *ngIf="editForm.value.id">
+    <h3><i class="pi pi-pencil" style="margin-right:6px"></i> Modifier l'utilisateur</h3>
+    <form [formGroup]="editForm" (ngSubmit)="saveEdit()">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nom d'utilisateur</label>
+          <input formControlName="username" required>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input formControlName="email" required type="email">
+        </div>
+        <div class="form-group">
+          <label>Rôle</label>
+          <select formControlName="role">
+            <option value="EMPLOYE">Employé</option>
+            <option value="CHEF">Chef</option>
+            <option value="RH">RH</option>
+            <option value="ADMIN">Admin</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary"><i class="pi pi-save"></i> Enregistrer</button>
+        <button type="button" class="btn" (click)="editForm.reset({})"><i class="pi pi-times"></i> Annuler</button>
+      </div>
+    </form>
+  </div>
+</div>

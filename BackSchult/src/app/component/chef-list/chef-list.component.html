@@ -1,0 +1,123 @@
+<div class="chef-container">
+  <!-- Interface pour Admin/RH : Sélection de chef -->
+  <div *ngIf="!isChefUser" class="header-section">
+    <h2>Sélectionner un chef</h2>
+    <button class="btn-create" (click)="toggleForm()" [disabled]="!selectedChefId">
+      <i class="pi pi-plus"></i> Créer une demande de congé
+    </button>
+  </div>
+
+  <!-- Interface pour Chef : Titre direct -->
+  <div *ngIf="isChefUser" class="header-section">
+    <h2>Gestion des demandes de congé</h2>
+    <p class="subtitle">Gérez les demandes de congé de vos employés</p>
+  </div>
+  
+  <div *ngIf="!isChefUser && showForm && !selectedChefId" class="alert alert-info">
+    <i class="pi pi-info-circle"></i> Veuillez d'abord sélectionner un chef pour créer une demande de congé.
+  </div>
+
+  <!-- Sélection de chef uniquement pour Admin/RH -->
+  <div *ngIf="!isChefUser" class="chef-selection">
+    <select [(ngModel)]="selectedChefId" (change)="onChefChange()" class="chef-dropdown">
+      <option [ngValue]="null">-- Choisir un chef --</option>
+      <option *ngFor="let chef of chefs" [ngValue]="chef.id">{{ chef.username }}</option>
+    </select>
+  </div>
+
+  <!-- Formulaire de création de demande -->
+  <div *ngIf="(showForm && selectedChefId) || isChefUser" class="form-container">
+    <h3>Créer une nouvelle demande de congé</h3>
+    
+    <!-- Indicateur de chargement des employés -->
+    <div *ngIf="isLoadingEmployees" class="loading-indicator">
+      <i class="pi pi-spin pi-spinner"></i> Chargement des employés...
+    </div>
+    
+    <form (ngSubmit)="createDemande()">
+      <div class="form-group">
+        <label for="employeId">Employé:</label>
+        <select id="employeId" [(ngModel)]="formData.employeId" name="employeId" required class="form-control" [disabled]="isLoadingEmployees">
+          <option [ngValue]="null">-- Choisir un employé --</option>
+          <option *ngFor="let employee of employees" [ngValue]="employee.id">
+            {{ employee.username }} ({{ employee.email }})
+          </option>
+        </select>
+        
+        <!-- Message si aucun employé -->
+        <div *ngIf="!isLoadingEmployees && employees.length === 0" class="no-employees">
+          <i class="pi pi-exclamation-triangle"></i>
+          Aucun employé trouvé pour ce chef.
+        </div>
+        
+        <!-- Message de chargement -->
+        <div *ngIf="isLoadingEmployees" class="loading-message">
+          <i class="pi pi-spin pi-spinner"></i> Chargement des employés...
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="dateDebut">Date de début:</label>
+        <input type="date" id="dateDebut" [(ngModel)]="formData.dateDebut" name="dateDebut" required class="form-control">
+      </div>
+      
+      <div class="form-group">
+        <label for="dateFin">Date de fin:</label>
+        <input type="date" id="dateFin" [(ngModel)]="formData.dateFin" name="dateFin" required class="form-control">
+      </div>
+      
+      <div class="form-group">
+        <label for="motif">Motif:</label>
+        <textarea id="motif" [(ngModel)]="formData.motif" name="motif" required class="form-control" rows="3"></textarea>
+      </div>
+      
+      <div class="form-actions">
+        <button type="submit" class="btn-submit" [disabled]="isLoadingEmployees || employees.length === 0">
+          <i class="pi pi-check"></i> Créer la demande
+        </button>
+        <button *ngIf="!isChefUser" type="button" class="btn-cancel" (click)="toggleForm()">
+          <i class="pi pi-times"></i> Annuler
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Liste des demandes -->
+  <div *ngIf="demandes.length > 0" class="demandes-section">
+    <h3>Demandes de congé des employés</h3>
+    <div class="table-container">
+      <table class="demandes-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Date Début</th>
+            <th>Date Fin</th>
+            <th>Motif</th>
+            <th>Status</th>
+            <th>Employé</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let d of demandes">
+            <td>{{ d.id }}</td>
+            <td>{{ d.dateDebut | date:'shortDate' }}</td>
+            <td>{{ d.dateFin | date:'shortDate' }}</td>
+            <td>{{ d.motif }}</td>
+            <td>
+              <span class="status-badge status-{{ d.status?.toLowerCase() }}">
+                {{ d.status }}
+              </span>
+            </td>
+            <td>{{ d.employeUsername }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Message si aucune demande -->
+  <div *ngIf="selectedChefId && demandes.length === 0" class="no-demandes">
+    <i class="pi pi-inbox"></i>
+    <p>Aucune demande de congé trouvée pour ce chef.</p>
+  </div>
+</div> 

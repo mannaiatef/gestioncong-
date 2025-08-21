@@ -1,0 +1,247 @@
+/* Container */
+.fournisseur-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  margin: 2rem auto;
+  max-width: 1100px;
+}
+
+/* Header */
+.card-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.card-header h2 {
+  font-size: 1.8rem;
+  color: #333;
+  margin: 0 0 1rem 0;
+  flex-grow: 1;
+}
+
+/* Search input */
+.search-bar {
+  max-width: 250px;
+  padding: 0.6rem 0.8rem;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  margin-right: 1rem;
+}
+
+/* Button "Ajouter" */
+.add-btn {
+  background-color: #007ad9;
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0, 122, 217, 0.3);
+  transition: background-color 0.3s ease;
+}
+
+.export-btn {
+  background-color: #007ad9;
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0, 122, 217, 0.3);
+  transition: background-color 0.3s ease;
+}
+
+.add-btn:hover {
+  background-color: #005fa3;
+}
+
+/* Table styling */
+.styled-table ::ng-deep .p-datatable-thead > tr > th {
+  background: #f0f4f8;
+  color: #333;
+  font-weight: bold;
+  border: none;
+}
+
+.styled-table ::ng-deep .p-datatable-tbody > tr {
+  transition: background-color 0.2s ease;
+}
+
+.styled-table ::ng-deep .p-datatable-tbody > tr:hover {
+  background-color: #eef6ff;
+  cursor: pointer;
+}
+
+.styled-table ::ng-deep td, 
+.styled-table ::ng-deep th {
+  padding: 1rem;
+}
+
+/* Action buttons */
+.action-btn {
+  border-radius: 50%;
+  width: 2.2rem;
+  height: 2.2rem;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 0.4rem;
+  border: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease;
+}
+
+.action-btn:hover {
+  transform: scale(1.1);
+}
+
+.action-btn.edit {
+  background-color: #ffc107;
+  color: #fff;
+}
+
+.action-btn.delete {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.modern-table ::ng-deep .p-datatable {
+  border-radius: 18px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+.modern-table ::ng-deep .p-datatable-thead > tr > th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #f0f4f8;
+  color: #007ad9;
+  font-weight: bold;
+  border: none;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+}
+.modern-table ::ng-deep .p-datatable-tbody > tr {
+  transition: background-color 0.2s;
+  border-radius: 12px;
+}
+.modern-table ::ng-deep .p-datatable-tbody > tr:hover {
+  background-color: #e3f0ff;
+  cursor: pointer;
+}
+.modern-table ::ng-deep td, 
+.modern-table ::ng-deep th {
+  padding: 1rem 1.2rem;
+}
+.pdf-badge {
+  background: #dc3545;
+  color: #fff;
+  border-radius: 50%;
+  padding: 0.2em 0.6em;
+  font-size: 0.9em;
+  margin-left: 0.5em;
+  vertical-align: middle;
+}
+
+.actions-col {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+  align-items: center;
+}
+.icon-btn {
+  background: #f0f4f8;
+  border: none;
+  outline: none;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+  font-size: 1.2rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  color: #fff;
+}
+.icon-btn.edit {
+  background: #ffc107;
+  color: #fff;
+}
+.icon-btn.delete {
+  background: #dc3545;
+  color: #fff;
+}
+.icon-btn:hover {
+  background: #007ad9;
+  color: #fff;
+  transform: scale(1.15);
+  box-shadow: 0 4px 12px rgba(0,122,217,0.15);
+}
+
+/* Table improvements */
+.modern-table ::ng-deep .p-datatable {
+  border-radius: 18px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+  overflow: hidden;
+  background: #fff;
+}
+.modern-table ::ng-deep .p-datatable-thead > tr > th,
+.modern-table ::ng-deep .p-datatable-tbody > tr > td {
+  padding: 1.2rem 1.5rem;
+  font-size: 1.08rem;
+}
+.modern-table ::ng-deep .p-datatable-thead > tr > th {
+  background: #f0f4f8;
+  color: #007ad9;
+  font-weight: bold;
+  border: none;
+  font-size: 1.15rem;
+  letter-spacing: 0.5px;
+}
+.modern-table ::ng-deep .p-datatable-tbody > tr {
+  transition: background-color 0.2s;
+  border-radius: 12px;
+}
+.modern-table ::ng-deep .p-datatable-tbody > tr:hover {
+  background-color: #e3f0ff;
+  cursor: pointer;
+}
+@media (max-width: 900px) {
+  .modern-table ::ng-deep .p-datatable-thead > tr > th,
+  .modern-table ::ng-deep .p-datatable-tbody > tr > td {
+    padding: 0.7rem 0.5rem;
+    font-size: 0.97rem;
+  }
+  .fournisseur-card {
+    padding: 0.7rem;
+  }
+}
+@media (max-width: 600px) {
+  .modern-table ::ng-deep .p-datatable-thead > tr > th,
+  .modern-table ::ng-deep .p-datatable-tbody > tr > td {
+    padding: 0.4rem 0.2rem;
+    font-size: 0.92rem;
+  }
+  .fournisseur-card {
+    padding: 0.2rem;
+  }
+  .card-header {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: stretch;
+  }
+}
+
+
+
+
+
+
+

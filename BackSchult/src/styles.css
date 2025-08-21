@@ -1,0 +1,39 @@
+/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Animation for page transitions */
+.route-animation {
+  position: absolute;
+  width: 100%;
+}
+
+.route-animation-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.route-animation-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.3s ease;
+}
+
+.route-animation-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.route-animation-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.3s ease;
+}

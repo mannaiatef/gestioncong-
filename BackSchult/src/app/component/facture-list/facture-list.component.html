@@ -1,0 +1,35 @@
+<div class="fournisseur-card">
+  <div class="card-header">
+    <h2><i class="pi pi-file" style="margin-right:8px;color:#007ad9;"></i>Liste des Factures</h2>
+    <button pButton type="button" label="Ajouter" icon="pi pi-plus" class="add-btn" (click)="addFacture()"></button>
+  </div>
+
+  <p-table [value]="factures" [paginator]="true" [rows]="10" [responsiveLayout]="'scroll'" class="styled-table modern-table">
+    <ng-template pTemplate="header">
+      <tr>
+       
+        <th>Date <i class="pi pi-calendar"></i></th>
+        <th>Montant total <i class="pi pi-euro"></i></th>
+        <th>Commande <i class="pi pi-file-o"></i></th>
+        <th>Actions <i class="pi pi-cog"></i></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-facture>
+      <tr>
+     
+        <td>{{ facture.date | date:'shortDate' }}</td>
+        <td>{{ facture.totalAmount | currency:'EUR' }}</td>
+        <td>{{ facture.commande?.id }}</td>
+        <td class="actions-col">
+          <button class="icon-btn edit" (click)="editFacture(facture.id)" pTooltip="Modifier">
+            <i class="pi pi-pencil"></i>
+          </button>
+          <button class="icon-btn delete" (click)="deleteFacture(facture.id)" pTooltip="Supprimer">
+            <i class="pi pi-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+  <p-toast></p-toast>
+</div>

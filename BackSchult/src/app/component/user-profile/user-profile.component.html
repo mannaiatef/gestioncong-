@@ -1,0 +1,184 @@
+<div class="profile-container">
+  <!-- Message de notification -->
+  <div *ngIf="message" class="message" [class]="'message-' + messageType">
+    <i [class]="messageType === 'success' ? 'pi pi-check-circle' : 'pi pi-exclamation-circle'"></i>
+    {{ message }}
+  </div>
+
+  <!-- Loading spinner -->
+  <div *ngIf="isLoading" class="loading-overlay">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- En-tête du profil -->
+  <div class="profile-header">
+    <div class="profile-avatar">
+      <div class="avatar-circle">
+        <i class="pi pi-user"></i>
+      </div>
+    </div>
+    <div class="profile-info">
+      <h1>{{ userProfile?.username || 'Chargement...' }}</h1>
+      <p class="user-role">{{ getRoleDisplayName(userProfile?.role) }}</p>
+      <span class="status-badge" [class]="getStatusClass(userProfile?.is_active)">
+        {{ getStatusDisplayName(userProfile?.is_active) }}
+      </span>
+    </div>
+  </div>
+
+  <!-- Informations du profil -->
+  <div class="profile-content">
+    <div class="profile-section">
+      <div class="section-header">
+        <h2><i class="pi pi-user"></i> Informations personnelles</h2>
+        <button *ngIf="!isEditing" class="btn-edit" (click)="toggleEdit()">
+          <i class="pi pi-pencil"></i> Modifier
+        </button>
+        <div *ngIf="isEditing" class="edit-actions">
+          <button class="btn-save" (click)="updateProfile()" [disabled]="profileForm.invalid">
+            <i class="pi pi-check"></i> Enregistrer
+          </button>
+          <button class="btn-cancel" (click)="toggleEdit()">
+            <i class="pi pi-times"></i> Annuler
+          </button>
+        </div>
+      </div>
+
+      <div class="profile-details">
+        <form [formGroup]="profileForm" class="profile-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="username">Nom d'utilisateur</label>
+              <input 
+                type="text" 
+                id="username" 
+                formControlName="username"
+                [readonly]="!isEditing"
+                [class.readonly]="!isEditing"
+                placeholder="Nom d'utilisateur">
+              <div *ngIf="profileForm.get('username')?.invalid && profileForm.get('username')?.touched" class="error-message">
+                <i class="pi pi-exclamation-triangle"></i>
+                Le nom d'utilisateur est requis (minimum 3 caractères)
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input 
+                type="email" 
+                id="email" 
+                formControlName="email"
+                [readonly]="!isEditing"
+                [class.readonly]="!isEditing"
+                placeholder="email@exemple.com">
+              <div *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched" class="error-message">
+                <i class="pi pi-exclamation-triangle"></i>
+                Veuillez entrer un email valide
+              </div>
+            </div>
+          </div>
+<!--
+          <div class="form-row">
+            <div class="form-group">
+              <label>ID Utilisateur</label>
+              <input type="text" [value]="userProfile?.id" readonly class="readonly">
+            </div>
+          
+            <div class="form-group">
+              <label>Rôle</label>
+              <input type="text" [value]="getRoleDisplayName(userProfile?.role)" readonly class="readonly">
+            </div>
+          </div>
+        -->
+        </form>
+      </div>
+    </div>
+
+    <!-- Section changement de mot de passe -->
+    <div class="profile-section">
+      <div class="section-header">
+        <h2><i class="pi pi-lock"></i> Sécurité</h2>
+        <button *ngIf="!isChangingPassword" class="btn-edit" (click)="togglePasswordChange()">
+          <i class="pi pi-key"></i> Changer le mot de passe
+        </button>
+        <button *ngIf="isChangingPassword" class="btn-cancel" (click)="togglePasswordChange()">
+          <i class="pi pi-times"></i> Annuler
+        </button>
+      </div>
+
+      <div *ngIf="isChangingPassword" class="password-form">
+        <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="currentPassword">Mot de passe actuel</label>
+              <input 
+                type="password" 
+                id="currentPassword" 
+                formControlName="currentPassword"
+                placeholder="••••••••">
+              <div *ngIf="passwordForm.get('currentPassword')?.invalid && passwordForm.get('currentPassword')?.touched" class="error-message">
+                <i class="pi pi-exclamation-triangle"></i>
+                Le mot de passe actuel est requis
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="newPassword">Nouveau mot de passe</label>
+              <input 
+                type="password" 
+                id="newPassword" 
+                formControlName="newPassword"
+                placeholder="••••••••">
+              <div *ngIf="passwordForm.get('newPassword')?.invalid && passwordForm.get('newPassword')?.touched" class="error-message">
+                <i class="pi pi-exclamation-triangle"></i>
+                Le nouveau mot de passe doit contenir au moins 6 caractères
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="confirmPassword">Confirmer le nouveau mot de passe</label>
+              <input 
+                type="password" 
+                id="confirmPassword" 
+                formControlName="confirmPassword"
+                placeholder="••••••••">
+              <div *ngIf="passwordForm.errors?.['passwordMismatch'] && passwordForm.get('confirmPassword')?.touched" class="error-message">
+                <i class="pi pi-exclamation-triangle"></i>
+                Les mots de passe ne correspondent pas
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn-save" [disabled]="passwordForm.invalid">
+              <i class="pi pi-check"></i> Changer le mot de passe
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Section actions -->
+    <div class="profile-section">
+      <div class="section-header">
+        <h2><i class="pi pi-cog"></i> Actions</h2>
+      </div>
+
+      <div class="actions-grid">
+        <button class="action-btn" routerLink="/dashboard">
+          <i class="pi pi-home"></i>
+          <span>Retour au Dashboard</span>
+        </button>
+
+        <button class="action-btn action-danger" (click)="logout()">
+          <i class="pi pi-sign-out"></i>
+          <span>Se déconnecter</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-toast></p-toast> 
